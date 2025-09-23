@@ -1,0 +1,82 @@
+name: CI/CD Monorepo
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/**"
+      - "config/**"
+
+jobs:
+  build-api:
+    name: 📡 API - NestJS
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'apps/api') || contains(github.event.head_commit.message, 'config')
+    steps:
+      - name: ⬇️ Checkout do código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Instala dependências
+        working-directory: apps/api
+        run: npm ci
+
+      - name: 🏗️ Build da API
+        working-directory: apps/api
+        run: npm run build
+
+      - name: 📤 Deploy da API (simulado)
+        run: echo "✅ Deploy da API concluído!"
+
+  build-admin:
+    name: 🛠️ Admin - Painel Next.js
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'apps/admin') || contains(github.event.head_commit.message, 'config')
+    steps:
+      - name: ⬇️ Checkout do código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Instala dependências
+        working-directory: apps/admin
+        run: npm ci
+
+      - name: 🏗️ Build do Admin
+        working-directory: apps/admin
+        run: npm run build
+
+      - name: 📤 Deploy do Admin (simulado)
+        run: echo "✅ Deploy do Painel concluído!"
+
+  build-site:
+    name: 🌐 Site - Next.js
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'apps/site') || contains(github.event.head_commit.message, 'config')
+    steps:
+      - name: ⬇️ Checkout do código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Instala dependências
+        working-directory: apps/site
+        run: npm ci
+
+      - name: 🏗️ Build do Site
+        working-directory: apps/site
+        run: npm run build
+
+      - name: 📤 Deploy do Site (simulado)
+        run: echo "✅ Deploy do Site concluído!"
