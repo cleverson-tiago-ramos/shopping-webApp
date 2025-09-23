@@ -1,7 +1,5 @@
 "use client";
 
-import "@/styles/layout/_sidebar.scss";
-
 export default function Sidebar() {
   return (
     <aside className="sidebar">

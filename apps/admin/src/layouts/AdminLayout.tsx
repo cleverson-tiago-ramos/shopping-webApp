@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import Sidebar from "@/components/Sidebar";
 import Topbar from "@/components/Topbar";
 
-import "@/styles/layout/_admin-layout.scss";
+// CORRIGIR ESTE CAMINHO:
 
 interface AdminLayoutProps {
   children: ReactNode;
