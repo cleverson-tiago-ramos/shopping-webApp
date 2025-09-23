@@ -1,39 +1,49 @@
-# Etapa 1 – Build da aplicação
+# apps/site/Dockerfile - VERSÃO CORRIGIDA
 FROM node:18-alpine AS builder
 
-# Diretório de trabalho
 WORKDIR /app
 
-# Copia os arquivos de dependências
+# Copiar package.json da raiz e do site
 COPY package*.json ./
+COPY apps/site/package*.json ./apps/site/
 
-# Instala as dependências com cache otimizado
-RUN npm ci
+# Copiar .env do site
+COPY apps/site/.env ./apps/site/.env
 
-# Copia todo o restante do projeto
-COPY . .
+# Copiar configurações compartilhadas
+COPY config/ ./config/
 
-# Compila o projeto
+# Copiar código do site
+COPY apps/site/ ./apps/site/
+
+# Instalar dependências do site
+WORKDIR /app/apps/site
+RUN npm install
+
+# Build da aplicação Next.js
 RUN npm run build
 
-# Etapa 2 – Imagem de produção
+# Etapa 2: Produção
 FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-ENV NODE_ENV=production
+ENV NODE_ENV production
 
-# Copia somente o necessário
-COPY --from=builder /app/.next .next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/next.config.js ./next.config.js
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Se estiver usando variáveis públicas em runtime, você pode copiar o `.env.production`:
-# COPY --from=builder /app/.env.production .env.production
+# Copiar arquivos da build
+COPY --from=builder /app/apps/site/public ./public
+COPY --from=builder /app/apps/site/.next ./.next
+COPY --from=builder /app/apps/site/package.json ./package.json
+COPY --from=builder /app/apps/site/node_modules ./node_modules
+COPY --from=builder /app/apps/site/.env ./.env
+
+RUN chown -R nextjs:nodejs /app
+
+USER nextjs
 
 EXPOSE 3000
 
-# Comando de inicialização
 CMD ["npm", "start"]

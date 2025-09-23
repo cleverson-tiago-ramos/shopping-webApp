@@ -1,36 +1,51 @@
-# Etapa 1: Build
+# apps/admin/Dockerfile - VERSÃO CORRIGIDA
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Instala apenas as dependências necessárias para build
+# Copiar package.json da raiz e do admin
 COPY package*.json ./
-COPY .env .env
+COPY apps/admin/package*.json ./apps/admin/
 
+# Copiar .env do admin (caminho correto)
+COPY apps/admin/.env ./apps/admin/.env
+
+# Copiar configurações compartilhadas
+COPY config/ ./config/
+
+# Copiar código do admin
+COPY apps/admin/ ./apps/admin/
+
+# Instalar dependências do admin
+WORKDIR /app/apps/admin
 RUN npm install
-
-# Copia os demais arquivos
-COPY . .
 
 # Build da aplicação Next.js
 RUN npm run build
 
-
-# Etapa 2: Produção (imagem mais leve)
+# Etapa 2: Produção
 FROM node:18-alpine AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV production
 
-# Copia apenas os arquivos essenciais da build
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.env ./.env
+# Criar usuário para segurança
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copiar apenas os arquivos essenciais da build
+COPY --from=builder /app/apps/admin/public ./public
+COPY --from=builder /app/apps/admin/.next ./.next
+COPY --from=builder /app/apps/admin/package.json ./package.json
+COPY --from=builder /app/apps/admin/node_modules ./node_modules
+COPY --from=builder /app/apps/admin/.env ./.env
+
+# Mudar proprietário dos arquivos
+RUN chown -R nextjs:nodejs /app
+
+USER nextjs
 
 EXPOSE 3000
 
-# Roda a aplicação como servidor Next.js
 CMD ["npm", "start"]
