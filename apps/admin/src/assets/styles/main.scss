@@ -1,0 +1,14 @@
+// main.scss
+@import "abstracts/variables";
+@import "abstracts/mixins";
+@import "base/reset";
+@import "base/typography";
+@import "layout/header";
+@import "layout/sidebar";
+@import "components/button";
+@import "pages/dashboard";
+
+@use './layout/admin-layout';
+@use './layout/topbar';
+@use './layout/sidebar';
+
