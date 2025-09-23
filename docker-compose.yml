@@ -1,0 +1,63 @@
+services:
+  site:
+    build:
+      context: ./apps/site
+      dockerfile: Dockerfile
+    container_name: shopping-site
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./apps/site/.env
+    restart: unless-stopped
+    networks:
+      - shopping-network
+
+  admin:
+    build:
+      context: ./apps/admin
+      dockerfile: Dockerfile
+    container_name: shopping-admin
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./apps/admin/.env
+    restart: unless-stopped
+    networks:
+      - shopping-network
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: shopping-api
+    ports:
+      - "3002:3000"
+    env_file:
+      - ./apps/api/.env
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - shopping-network
+
+  postgres:
+    image: postgres:16
+    container_name: shopping-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shopping
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - shopping-network
+
+volumes:
+  postgres_data:
+
+networks:
+  shopping-network:
+    driver: bridge
