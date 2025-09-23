@@ -9,13 +9,16 @@
 }
 
 .toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
   padding: 1rem 1.5rem;
   border-radius: 8px;
   color: #fff;
   font-weight: 500;
   animation: fadein 0.3s ease, fadeout 0.3s ease 2.7s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
   &.success {
     background: #22c55e;
   }
@@ -27,6 +30,26 @@
   }
   &.warning {
     background: #f59e0b;
+  }
+  &-icon {
+    font-size: 1.5rem;
+  }
+
+  &-content {
+    flex: 1;
+    p {
+      margin: 0;
+    }
+  }
+
+  &-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
   }
 }
 
