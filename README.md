@@ -4,9 +4,9 @@ Este projeto é uma aplicação completa baseada em arquitetura de **monorepo**,
 
 - 🛒 **Site** (Next.js)
 - 🛠️ **Admin** (Next.js)
-- ⚙️ **API** (NestJS ou Express)
+- ⚙️ **API** (NestJS )
 - 🐘 **PostgreSQL** (Banco de dados)
-- 🔧 *Opcional*: Redis, BullMQ, Firebase (já estruturado para integração futura)
+- 🔧 _Opcional_: Redis, BullMQ, Firebase (já estruturado para integração futura)
 
 ---
 
@@ -31,20 +31,20 @@ docker compose up --build
 
 ```yaml
 services:
-  site:         # Frontend público (loja virtual)
-  admin:        # Painel administrativo
-  api:          # Backend (REST API)
-  postgres:     # Banco de dados PostgreSQL
+  site: # Frontend público (loja virtual)
+  admin: # Painel administrativo
+  api: # Backend (REST API)
+  postgres: # Banco de dados PostgreSQL
 ```
 
 ### 🧩 Detalhes dos serviços
 
-| Serviço   | Porta Externa | Framework | Contexto | Dockerfile               |
-|-----------|----------------|-----------|----------|--------------------------|
-| `site`    | `3000`         | Next.js   | `.`      | `apps/site/Dockerfile`   |
-| `admin`   | `3001`         | Next.js   | `.`      | `apps/admin/Dockerfile`  |
-| `api`     | `3002`         | Node.js   | `.`      | `apps/api/Dockerfile`    |
-| `postgres`| `5432`         | PostgreSQL| -        | Imagem oficial (`16`)    |
+| Serviço    | Porta Externa | Framework  | Contexto | Dockerfile              |
+| ---------- | ------------- | ---------- | -------- | ----------------------- |
+| `site`     | `3000`        | Next.js    | `.`      | `apps/site/Dockerfile`  |
+| `admin`    | `3001`        | Next.js    | `.`      | `apps/admin/Dockerfile` |
+| `api`      | `3002`        | Node.js    | `.`      | `apps/api/Dockerfile`   |
+| `postgres` | `5432`        | PostgreSQL | -        | Imagem oficial (`16`)   |
 
 > 🔁 Os serviços compartilham a mesma `network` chamada `shopping-network`.
 
@@ -97,12 +97,12 @@ REDIS_PORT=6379
 
 ## 🔗 Acessos locais
 
-| Aplicação | URL                  |
-|-----------|----------------------|
-| 🛒 Site    | http://localhost:3000 |
-| 🛠️ Admin   | http://localhost:3001 |
-| ⚙️ API     | http://localhost:3002 |
-| 🐘 Banco   | localhost:5432       |
+| Aplicação | URL                   |
+| --------- | --------------------- |
+| 🛒 Site   | http://localhost:3000 |
+| 🛠️ Admin  | http://localhost:3001 |
+| ⚙️ API    | http://localhost:3002 |
+| 🐘 Banco  | localhost:5432        |
 
 ---
 
