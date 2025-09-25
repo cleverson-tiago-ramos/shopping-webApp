@@ -1,19 +1,33 @@
-// apps/admin/src/pages/login.tsx
-import Head from "next/head";
-import LoginForm from "@/components/LoginForm";
+// apps/admin/src/pages/index.tsx
+import React from "react";
+import LoginForm from "../components/login/LoginForm";
+import SocialLogin from "../components/socialLogin/SocialLogin";
 
-export default function LoginPage() {
+const LoginPage = () => {
   return (
-    <>
-      <Head>
-        <title>Login | Painel Admin</title>
-      </Head>
-      <main className="login-page">
-        <div className="login-container">
-          <h1>Entrar no Painel</h1>
+    <div className="login-page">
+      <header className="login-header">
+        <h1>Login</h1>
+        <p>
+          Ainda não tem uma conta? <a href="#">Registre-se</a>
+        </p>
+      </header>
+
+      <main className="login-card">
+        <div className="login-card__column">
           <LoginForm />
         </div>
+
+        <div className="login-divider">
+          <span>ou</span>
+        </div>
+
+        <div className="login-card__column">
+          <SocialLogin />
+        </div>
       </main>
-    </>
+    </div>
   );
-}
+};
+
+export default LoginPage;

@@ -1,0 +1,197 @@
+// apps/admin/src/assets/styles/layout/_login.scss
+
+.login-page {
+  display: flex;
+  flex-direction: column; // Alinhamento vertical
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #333;
+}
+
+// Cabeçalho principal ("Login", "Registre-se")
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+
+    a {
+      color: #0070f3;
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// O card que contém as duas colunas
+.login-card {
+  display: flex;
+  flex-direction: row; // Layout de colunas
+  align-items: stretch;
+  width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+
+  // Coluna da esquerda (Email) e Direita (Social)
+  &__column {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+// Divisor vertical com "ou"
+.login-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+
+  span {
+    color: #aaa;
+    font-size: 0.9rem;
+  }
+}
+
+// Formulário de Email (Coluna da Esquerda)
+.login-form {
+  width: 100%;
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    &:focus {
+      outline: none;
+      border-color: #0070f3;
+      box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+    }
+  }
+
+  &__forgot-password {
+    display: block;
+    text-align: left;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #0070f3;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #0070f3;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #0070f3;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #0070f3;
+      color: #fff;
+    }
+  }
+}
+
+// Botões de Login Social (Coluna da Direita)
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    transition: background-color 0.2s;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: #f7f7f7;
+    }
+
+    // Estilos específicos para cada botão
+    &--google {
+      background-color: #4285f4;
+      color: white;
+      border-color: #4285f4;
+      &:hover {
+        background-color: #357ae8;
+      }
+    }
+    &--facebook {
+      background-color: #1877f2;
+      color: white;
+      border-color: #1877f2;
+      &:hover {
+        background-color: #166fe5;
+      }
+    }
+    &--apple {
+      background-color: #000;
+      color: white;
+      border-color: #000;
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+
+  &__sso-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #0070f3;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
