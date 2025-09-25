@@ -1,19 +1,66 @@
 // apps/admin/src/pages/login.tsx
-import Head from "next/head";
-import LoginForm from "@/components/LoginForm";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import LoginForm from "@/components/login/LoginForm";
+import SocialLogin from "@/components/socialLogin/SocialLogin";
+import Header from "@/components/login/Header";
+import Footer from "@/layouts/Footer";
 
-export default function LoginPage() {
+const LoginPage = () => {
+  // Estado para controlar a etapa do login ('email' ou 'password')
+  const [loginStep, setLoginStep] = useState<"email" | "password">("email");
+  // Estado para guardar o email após a primeira etapa
+  const [submittedEmail, setSubmittedEmail] = useState("");
+
+  // Função chamada quando o formulário de email é enviado
+  const handleEmailSubmit = (email: string) => {
+    // Aqui você poderia validar o email ou verificar se ele existe no DB
+    console.log("Email recebido:", email);
+    setSubmittedEmail(email);
+    setLoginStep("password"); // Muda para a etapa de senha
+  };
+
+  // Função chamada quando o formulário de senha é enviado
+  const handleFinalSubmit = (password: string) => {
+    console.log("Tentativa de login final com:", {
+      email: submittedEmail,
+      password: password,
+    });
+    // Lógica final de autenticação com a API
+    toast.success("Login efetuado com sucesso!");
+  };
+
   return (
-    <>
-      <Head>
-        <title>Login | Painel Admin</title>
-      </Head>
-      <main className="login-page">
-        <div className="login-container">
-          <h1>Entrar no Painel</h1>
-          <LoginForm />
+    <div className="login-page">
+      <Header />
+      <header className="login-header">
+        <h1>Login</h1>
+        <p>
+          Ainda não tem uma conta? <a href="#">Registre-se</a>
+        </p>
+      </header>
+
+      <main className="login-card">
+        <div className="login-card__column">
+          <LoginForm
+            loginStep={loginStep}
+            onEmailSubmit={handleEmailSubmit}
+            submittedEmail={submittedEmail}
+            onFinalSubmit={handleFinalSubmit}
+          />
+        </div>
+
+        <div className="login-divider">
+          <span>ou</span>
+        </div>
+
+        <div className="login-card__column">
+          <SocialLogin />
         </div>
       </main>
-    </>
+      <Footer />
+    </div>
   );
-}
+};
+
+export default LoginPage;

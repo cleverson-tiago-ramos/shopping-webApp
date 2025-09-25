@@ -1,64 +1,93 @@
-# docker-compose.yml - VERSÃO CORRIGIDA
 services:
   site:
     build:
-      context: . # ← MUDE PARA CONTEXTO RAIZ
+      context: .
       dockerfile: apps/site/Dockerfile
-    container_name: shopping-site
+    container_name: webapp-vantage-site
     ports:
       - "3000:3000"
     env_file:
       - ./apps/site/.env
     restart: unless-stopped
     networks:
-      - shopping-network
+      - webapp-vantage-network
+    depends_on:
+      - postgres
+      - redis
 
   admin:
     build:
-      context: . # ← MUDE PARA CONTEXTO RAIZ
+      context: .
       dockerfile: apps/admin/Dockerfile
-    container_name: shopping-admin
+    container_name: webapp-vantage-admin
     ports:
       - "3001:3000"
     env_file:
       - ./apps/admin/.env
     restart: unless-stopped
     networks:
-      - shopping-network
+      - webapp-vantage-network
+    depends_on:
+      - postgres
+      - redis
 
   api:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
-    container_name: shopping-api
+    container_name: webapp-vantage-api
     ports:
       - "3002:8000"
     env_file:
       - ./apps/api/.env
     depends_on:
       - postgres
+      - redis
     restart: unless-stopped
     networks:
-      - shopping-network
+      - webapp-vantage-network
 
   postgres:
-    image: postgres:16
-    container_name: shopping-postgres
+    image: postgres:16-alpine # ← Versão Alpine mais leve
+    container_name: webapp-vantage-postgres
     restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: shopping
+      POSTGRES_DB: webapp-vantage
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
-      - shopping-network
+      - webapp-vantage-network
+
+  redis:
+    image: redis:7-alpine # ← Versão Alpine
+    container_name: webapp-vantage-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - webapp-vantage-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: webapp-vantage-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@webapp-vantage.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8082:80"
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - webapp-vantage-network
 
 volumes:
   postgres_data:
 
 networks:
-  shopping-network:
+  webapp-vantage-network:
     driver: bridge
