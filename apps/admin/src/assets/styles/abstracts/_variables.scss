@@ -1,0 +1,76 @@
+// apps/admin/src/assets/styles/abstracts/_variables.scss
+
+// 1. COLORS
+// ==========================================================================
+
+// Paleta de Cores Base (extraída da imagem)
+$color-red: #e82e25;
+$color-gold: #e6e353; // Atenção: a cor na imagem parece mais um amarelo dourado (#F6B93B)
+$color-orange: #ff972c;
+$color-white: #ffffff;
+$color-gray: #d1d0cb;
+$color-dark-secundary: #000624;
+
+// Cores Semânticas (como as cores serão usadas no projeto)
+$primary-color: $color-red;
+$secondary-color: $color-orange;
+$accent-color: $color-gold;
+
+// Cores de Texto
+$text-color: #333333;
+$text-color-light: #555555;
+$text-color-inverted: $color-white;
+
+// Cores de Fundo
+$background-color: #f0f2f5;
+$background-color-light: $color-white;
+
+// Cores de Feedback
+$success-color: #2ac905;
+$error-color: $color-red;
+$warning-color: $color-orange;
+$info-color: #17a2b8;
+
+// Bordas e Divisores
+$border-color: #e5e9f1;
+
+// 2. TYPOGRAPHY
+// ==========================================================================
+
+// Famílias de Fonte (veja a nota sobre como importá-las abaixo)
+$font-family-base: "Roboto Mono", monospace;
+$font-family-display: "Baron", sans-serif; // Fonte para títulos e destaques
+
+// Tamanhos de Fonte
+$font-size-base: 1rem; // ~16px
+$font-size-sm: 0.875rem; // ~14px
+$font-size-lg: 1.25rem; // ~20px
+
+// Pesos de Fonte
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// 3. SPACING
+// ==========================================================================
+// Unidade base para margens, paddings, etc.
+$base-spacing: 1rem; // 16px
+
+$spacing-xs: $base-spacing * 0.25; // 4px
+$spacing-sm: $base-spacing * 0.5; // 8px
+$spacing-md: $base-spacing; // 16px
+$spacing-lg: $base-spacing * 1.5; // 24px
+$spacing-xl: $base-spacing * 2; // 32px
+
+// 4. BORDERS
+// ==========================================================================
+$border-width: 1px;
+$border-radius: 6px;
+
+// 5. BREAKPOINTS
+// ==========================================================================
+// Para design responsivo (Mobile-first)
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

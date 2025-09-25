@@ -1,8 +1,10 @@
-// apps/admin/src/pages/index.tsx
+// apps/admin/src/pages/login.tsx
 import React, { useState } from "react";
 import { toast } from "sonner";
-import LoginForm from "../components/login/LoginForm";
-import SocialLogin from "../components/socialLogin/SocialLogin";
+import LoginForm from "@/components/login/LoginForm";
+import SocialLogin from "@/components/socialLogin/SocialLogin";
+import Header from "@/components/login/Header";
+import Footer from "@/layouts/Footer";
 
 const LoginPage = () => {
   // Estado para controlar a etapa do login ('email' ou 'password')
@@ -30,6 +32,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
+      <Header />
       <header className="login-header">
         <h1>Login</h1>
         <p>
@@ -55,6 +58,7 @@ const LoginPage = () => {
           <SocialLogin />
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

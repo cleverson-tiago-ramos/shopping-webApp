@@ -1,262 +1,326 @@
-// apps/admin/src/assets/styles/layout/_login.scss
+@use "../abstracts/variables" as var;
 
 .login-page {
   display: flex;
-  flex-direction: column; // Alinhamento vertical
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: #333;
+  background-color: var.$background-color-light;
+  font-family: var.$font-family-base;
+  color: var.$text-color;
+}
 
-  // Cabeçalho principal ("Login", "Registre-se")
-  .login-header {
-    text-align: center;
-    margin-bottom: 2rem;
+// Cabeçalho principal ("Login", "Registre-se")
+.login-header {
+  text-align: center;
+  margin-bottom: var.$spacing-xl; // 2rem -> 32px
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
+  h1 {
+    font-family: var.$font-family-display;
+    font-size: 2.5rem;
+    font-weight: var.$font-weight-bold;
+  }
 
-    p {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      color: #555;
+  p {
+    margin-top: var.$spacing-sm; // 0.5rem -> 8px
+    font-size: var.$font-size-base;
+    color: var.$text-color-light;
 
-      a {
-        color: #0070f3;
-        text-decoration: none;
-        font-weight: 500;
-        &:hover {
-          text-decoration: underline;
-        }
+    a {
+      color: var.$color-dark-secundary; // Usando a cor de informação para links
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
-  // O card que contém as duas colunas
-  .login-card {
-    display: flex;
-    flex-direction: row; // Layout de colunas
-    align-items: stretch;
-    width: 100%;
-    max-width: 800px;
-    background-color: #fff;
+}
 
-    // Coluna da esquerda (Email) e Direita (Social)
-    &__column {
-      flex: 1;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+// O card que contém as duas colunas
+.login-card {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  max-width: 800px;
+  background-color: var.$background-color-light;
+
+  &__column {
+    flex: 1;
+    padding: var.$spacing-xl;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+// Divisor vertical com "ou"
+.login-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var.$spacing-md;
+
+  span {
+    color: #aaa; // Mantido pois é uma cor neutra muito específica
+    font-size: var.$font-size-sm;
+  }
+}
+
+// Formulário de Email (Coluna da Esquerda)
+.login-form {
+  width: 100%;
+
+  &__label {
+    font-size: var.$font-size-sm;
+    font-weight: 500;
+    margin-bottom: var.$spacing-sm;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    padding: var.$spacing-sm * 1.5 var.$spacing-sm * 1.75; // 12px 14px
+    border: var.$border-width solid var.$border-color;
+    border-radius: var.$border-radius;
+    font-size: var.$font-size-base;
+    margin-bottom: var.$spacing-md;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var.$color-dark-secundary;
+      box-shadow: 0 0 0 2px rgba(23, 162, 184, 0.2);
+    }
+
+    &.is-invalid {
+      border-color: var.$error-color;
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(232, 46, 37, 0.2);
+      }
     }
   }
 
-  // Divisor vertical com "ou"
-  .login-divider {
+  &__forgot-password {
+    display: block;
+    text-align: left;
+    margin-bottom: var.$spacing-lg;
+    font-size: var.$font-size-sm;
+    color: var.$color-dark-secundary;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .login-form__button {
+    width: 100%;
+    padding: var.$spacing-sm * 1.5; // 12px
+    border: var.$border-width solid var.$border-color;
+    border-radius: var.$border-radius;
+    background-color: var.$success-color;
+    color: var.$color-white;
+    font-size: var.$font-size-base;
+    font-weight: var.$font-weight-bold;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: var.$color-dark-secundary;
+      color: var.$text-color-inverted;
+    }
+
+    &--primary {
+      background-color: var.$color-dark-secundary;
+      color: var.$text-color-inverted;
+      &:hover {
+        background-color: darken(var.$color-dark-secundary, 10%);
+      }
+    }
+  }
+
+  &__display-email {
+    font-size: 0.95rem;
+    margin-bottom: var.$spacing-lg;
+    color: var.$text-color-light;
+    border: var.$border-width solid #eee; // Cor de borda bem clara, mantida
+    padding: var.$spacing-sm * 1.25 var.$spacing-sm * 1.75; // 10px 14px
+    border-radius: var.$border-radius;
+    background-color: #f7f7f7; // Cor de fundo bem clara, mantida
+  }
+
+  &__password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__toggle-password {
+    position: absolute;
+    right: var.$spacing-sm * 1.5; // 12px
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    padding: var.$spacing-xs; // 4px
+
+    &:hover {
+      color: var.$text-color;
+    }
+  }
+}
+
+// Botões de Login Social (Coluna da Direita)
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: var.$spacing-md;
+  width: 100%;
+
+  &__button {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    gap: var.$spacing-sm * 1.25; // 10px
+    padding: var.$spacing-sm * 1.5; // 12px
+    border: var.$border-width solid var.$border-color;
+    border-radius: var.$border-radius;
+    background-color: var.$background-color-light;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var.$text-color;
+    transition: background-color 0.2s;
 
-    span {
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-  }
-
-  // Formulário de Email (Coluna da Esquerda)
-  .login-form {
-    width: 100%;
-
-    &__label {
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      display: block;
+    svg {
+      width: 20px;
+      height: 20px;
     }
 
-    &__input {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      &:focus {
-        outline: none;
-        border-color: #0070f3;
-        box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
-      }
-    }
-
-    &__forgot-password {
-      display: block;
-      text-align: left;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      color: #0070f3;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    &__button {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #0070f3;
-      border-radius: 6px;
-      background-color: #fff;
-      color: #0070f3;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s;
-
-      &:hover {
-        background-color: #0070f3;
-        color: #fff;
-      }
-    }
-  }
-
-  // Botões de Login Social (Coluna da Direita)
-  .social-login {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-
-    &__button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background-color: #fff;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #333;
-      transition: background-color 0.2s;
-
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-
-      &:hover {
-        background-color: #f7f7f7;
-      }
-
-      // Estilos específicos para cada botão
-      &--google {
-        background-color: #4285f4;
-        color: white;
-        border-color: #4285f4;
-        &:hover {
-          background-color: #357ae8;
-        }
-      }
-      &--facebook {
-        background-color: #1877f2;
-        color: white;
-        border-color: #1877f2;
-        &:hover {
-          background-color: #166fe5;
-        }
-      }
-      &--apple {
-        background-color: #000;
-        color: white;
-        border-color: #000;
-        &:hover {
-          background-color: #333;
-        }
-      }
-    }
-
-    &__sso-link {
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #0070f3;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  /* Adicione estas novas classes ao final do seu arquivo _login.scss */
-
-  .login-form {
-    &__display-email {
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      color: #555;
-      border: 1px solid #eee;
-      padding: 10px 14px;
-      border-radius: 6px;
+    &:hover {
       background-color: #f7f7f7;
     }
-    &__input {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      transition: all 0.2s; // Adicionamos 'all' para transicionar a cor da borda também
 
-      &:focus {
-        outline: none;
-        border-color: #0070f3;
-        box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
-      }
-
-      // ADICIONE ESTAS LINHAS ABAIXO
-      &.is-invalid {
-        border-color: #d93025; // Um tom de vermelho para o erro
-
-        &:focus {
-          box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.2);
-        }
+    // Cores de marcas são específicas, então são mantidas.
+    // O ideal seria criar variáveis para elas também (ex: $google-blue).
+    &--google {
+      background-color: #4285f4;
+      color: white;
+      border-color: #4285f4;
+      &:hover {
+        background-color: #357ae8;
       }
     }
-    &__password-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
+    &--facebook {
+      background-color: #1877f2;
+      color: white;
+      border-color: #1877f2;
+      &:hover {
+        background-color: #166fe5;
+      }
     }
+    &--apple {
+      background-color: #000;
+      color: white;
+      border-color: #000;
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
 
-    &__toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #888;
-      padding: 4px;
+  &__sso-link {
+    text-align: center;
+    margin-top: var.$spacing-md;
+    font-size: var.$font-size-sm;
+    color: var.$color-dark-secundary;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+// Adicione este código ao final do seu arquivo _login.scss
+
+// ... (todo o seu código SCSS existente)
+
+// Estilos para o Header da Página
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  &__logo {
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-family: var.$font-family-display;
+    font-size: 2.5rem;
+    font-weight: var.$font-weight-bold;
+  }
+
+  &__subtitle {
+    margin-top: var.$spacing-sm;
+    color: var.$text-color-light;
+
+    a {
+      color: var.$info-color;
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Estilos para o Footer da Página
+.page-footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+  color: var.$text-color-light;
+  font-size: var.$font-size-sm;
+  width: 100%;
+  max-width: 800px;
+
+  &__links {
+    margin-bottom: var.$spacing-md;
+
+    a {
+      color: var.$text-color-light;
+      text-decoration: none;
+      margin: 0 var.$spacing-sm;
 
       &:hover {
-        color: #333;
+        text-decoration: underline;
       }
     }
 
-    &__button--primary {
-      background-color: #0070f3;
-      color: #fff;
-      &:hover {
-        background-color: #0056b3;
-      }
+    span {
+      color: var.$border-color;
     }
+  }
+
+  &__recaptcha {
+    margin-bottom: var.$spacing-md;
+    font-size: 0.75rem; // Menor para a nota de rodapé
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+
+    a {
+      color: var.$text-color-light; // Mesma cor do texto
+    }
+  }
+
+  &__copyright {
+    font-size: 0.8rem;
+    opacity: 0.8;
   }
 }
